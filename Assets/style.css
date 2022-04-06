@@ -1,0 +1,44 @@
+* {
+    margin: 6px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.red {
+    background-color: red;
+}
+
+main{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+#question-text{
+    text-align: center;
+}
+
+button{
+    padding: 6px;
+    margin: 6px;
+    min-width: 15vw;
+}
+
+ul {
+    list-style: none;
+}
+

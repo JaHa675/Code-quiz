@@ -36,7 +36,7 @@ var showNextQuestion = function () {
     choiceBtn.setAttribute("class", "answer");
     choiceBtn.setAttribute("value", choice);
 
-    choiceBtn.textContent = i + 1 + ". " + choice;
+    choiceBtn.textContent = choice;
 
     choiceBtn.onclick = answerClick;
 
@@ -49,6 +49,7 @@ function answerClick() {
     console.log("wrong");
     timeLeft = timeLeft - 3;
     timePara.textContent = "Timer: " + timeLeft;
+    this.classList.add("red");
   } else {
     console.log("right");
 
@@ -95,6 +96,10 @@ function endQuiz() {
   initialsForm.classList.remove("hidden");
 }
 
+
+
+
+// submit button listener
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
   var userInitials = document.getElementById("initialsBox").value;
@@ -118,6 +123,11 @@ submitBtn.addEventListener("click", function (event) {
   }
 });
 
+
+
+
+
+
 function showHighscores() {
   answers.innerHTML = "";
   timePara.textContent = "";
@@ -137,23 +147,23 @@ function showHighscores() {
 
 var questions = [
   {
-    title: "this is a question",
+    title: "Which one of these is the second button?",
     choices: ["choice a", "choice b", "choice c", "choice d"],
     answer: "choice b",
   },
   {
-    title: "this is a question",
+    title: "Which one of these is the third button?",
     choices: ["choice a", "choice b", "choice c", "choice d"],
-    answer: "choice b",
+    answer: "choice c",
   },
   {
-    title: "this is a question",
+    title: "Which one of these is the first button?",
     choices: ["choice a", "choice b", "choice c", "choice d"],
-    answer: "choice b",
+    answer: "choice a",
   },
   {
-    title: "this is a question",
+    title: "Which one of these is the fourth button?",
     choices: ["choice a", "choice b", "choice c", "choice d"],
-    answer: "choice b",
+    answer: "choice d",
   },
 ];
