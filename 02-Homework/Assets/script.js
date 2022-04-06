@@ -9,8 +9,9 @@ var currentQuestionIndex = 0;
 var timeLeft = 60;
 var currentScore = 0;
 var scoreArray = [];
-var score = localStorage.getItem("score");
-var storedScores = [];
+var storedScores = JSON.parse(localStorage.getItem("score"));
+
+console.log(storedScores)
 
 // start game function
 startbtn.addEventListener("click", function (event) {
@@ -86,7 +87,7 @@ function endQuiz() {
   // needs to remove last question from screen
   answers.innerHTML = "";
   questionText.innerHTML = "Your score: " + currentScore;
-
+  
   // stop timer
   clearInterval(timer);
   timePara.textContent = "Timer: ";
@@ -98,31 +99,31 @@ submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
   var userInitials = document.getElementById("initialsBox").value;
   var currentScoreArray = [userInitials, currentScore];
-
+  
   // store high score(time) and initials
-  if (storedScores.length > 0) {
-    scoreArray = JSON.parse(localStorage.getItem("score"));
+  if (storedScores === null) {
     scoreArray.push(...currentScoreArray);
     localStorage.setItem("score", JSON.stringify(scoreArray));
-  } else {
-    localStorage.setItem("score", JSON.stringify(currentScoreArray));
-    var firstScore = document.createElement("li");
-    var firstScoreText = document.createTextNode(
-      currentScoreArray[0] + "  " + currentScoreArray[1]
+    var node = document.createElement("li");
+    var textnode = document.createTextNode(
+      scoreArray[0] + "  " + scoreArray[1]
     );
-    firstScore.appendChild(firstScoreText);
-    document.getElementById("scoreList").appendChild(firstScore);
+    node.appendChild(textnode);
+    document.getElementById("scoreList").appendChild(node)
+  } else {
+
+    storedScores.push(...currentScoreArray)
+    localStorage.setItem("score", JSON.stringify(storedScores));
+    showHighscores();
   }
-  showHighscores();
 });
 
 function showHighscores() {
   answers.innerHTML = "";
   timePara.textContent = "";
-
   // pull high scores from local storage
-  storedScores = JSON.parse(localStorage.getItem("score"));
 
+  
   for (let i = 0; i < storedScores.length; i = i + 2) {
     var node = document.createElement("li");
     var textnode = document.createTextNode(
@@ -132,11 +133,7 @@ function showHighscores() {
     document.getElementById("scoreList").appendChild(node);
   }
 }
-// needs to erase the local storage for high scores and initials
 
-
-
-// store high score(time) and initials
 
 var questions = [
   {
