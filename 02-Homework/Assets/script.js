@@ -1,13 +1,16 @@
 // TODO: declare variables
 var startbtn = document.getElementById("startbtn");
 var timePara = document.getElementById("timer");
-var initialsForm = document.getElementById("initialsForm");
 var questionText = document.getElementById("question-text");
+var initialsForm = document.getElementById("initialsForm");
+var submitBtn = document.getElementById("submitBtn");
+var scoreList = document.getElementById("scoreList");
 var currentQuestionIndex = 0;
 var timeLeft = 60;
-// TODO: store high score(time) and initials
-
-// TODO: pull high scores from local storage
+var currentScore = 0;
+var scoreArray = [];
+var score = localStorage.getItem("score");
+var storedScores = [];
 
 // start game function
 startbtn.addEventListener("click", function (event) {
@@ -58,9 +61,9 @@ function answerClick() {
   }
 }
 
-// TODO: start timer function
+// start timer function
 function timerStart() {
-  // TODO: starts the timer and adds it to the screen
+  // starts the timer and adds it to the screen
   timePara.textContent = "Timer: " + timeLeft;
 
   timer = setInterval(function () {
@@ -69,33 +72,71 @@ function timerStart() {
     timePara.textContent = "Timer: " + timeLeft;
     if (timeLeft <= 0) {
       console.log("go faster next time");
-      clearInterval(timer)
+      clearInterval(timer);
       timePara.textContent = "Timer: ";
     }
   }, 1000);
 }
 
-// TODO: end game function
+// end game function
 function endQuiz() {
-  // TODO: record what timer was at
+  // record what timer was at
   console.log("games done");
-  var currentScore = timeLeft;
-  localStorage.setItem("score", currentScore);
-  // TODO: needs to remove last question from screen
+  currentScore = timeLeft;
+  // needs to remove last question from screen
   answers.innerHTML = "";
   questionText.innerHTML = "Your score: " + currentScore;
-
 
   // stop timer
   clearInterval(timer);
   timePara.textContent = "Timer: ";
-  // TODO: show enter initials screen
-initialsForm.classList.remove("hidden");
-
-
+  // show enter initials screen
+  initialsForm.classList.remove("hidden");
 }
-// TODO: clear high scores button
-// TODO: needs to erase the local storage for high scores and initials
+
+submitBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  var userInitials = document.getElementById("initialsBox").value;
+  var currentScoreArray = [userInitials, currentScore];
+
+  // store high score(time) and initials
+  if (storedScores.length > 0) {
+    scoreArray = JSON.parse(localStorage.getItem("score"));
+    scoreArray.push(...currentScoreArray);
+    localStorage.setItem("score", JSON.stringify(scoreArray));
+  } else {
+    localStorage.setItem("score", JSON.stringify(currentScoreArray));
+    var firstScore = document.createElement("li");
+    var firstScoreText = document.createTextNode(
+      currentScoreArray[0] + "  " + currentScoreArray[1]
+    );
+    firstScore.appendChild(firstScoreText);
+    document.getElementById("scoreList").appendChild(firstScore);
+  }
+  showHighscores();
+});
+
+function showHighscores() {
+  answers.innerHTML = "";
+  timePara.textContent = "";
+
+  // pull high scores from local storage
+  storedScores = JSON.parse(localStorage.getItem("score"));
+
+  for (let i = 0; i < storedScores.length; i = i + 2) {
+    var node = document.createElement("li");
+    var textnode = document.createTextNode(
+      storedScores[i] + "  " + storedScores[i + 1]
+    );
+    node.appendChild(textnode);
+    document.getElementById("scoreList").appendChild(node);
+  }
+}
+// needs to erase the local storage for high scores and initials
+
+
+
+// store high score(time) and initials
 
 var questions = [
   {

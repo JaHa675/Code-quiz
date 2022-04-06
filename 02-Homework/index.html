@@ -9,24 +9,23 @@
   </head>
   <body>
     <header>
-      <nav>
-        <p>view highscores</p>
-        <p id="timer">Timer: </p>
-      </nav>
       <h1>Quiz time!</h1>
-        <button id="startbtn">Start!</button>
+      <button id="startbtn">Start!</button>
+      <p id="timer"></p>
     </header>
     <main>
-
       <div>
-        <h2 id = "question-text"></h2>
-        <div id="answers" class="answers">
-
-        </div>
-        <form id= "initialsForm"class="hidden">
-          <label id= "initialsLabel" for="initials" > Initials Here:</label><br>
-          <input type=text id= "InitialsBox" name=userInitials><br>
+        <h2 id="question-text"></h2>
+        <div id="answers" class="answers"></div>
+        <div id="buttons">
+          <form id="initialsForm" class="hidden">
+            <label id="initialsLabel" for="initials"> Initials Here:</label
+            ><br />
+            <input type="text" id="initialsBox" name="userInitials" /><br />
+            <input type="submit" value="submit" id="submitBtn" />
           </form>
+        </div>
+        <ul id="scoreList"></ul>
       </div>
     </main>
     <script src="./Assets/script.js"></script>
